@@ -15,5 +15,18 @@ class Room(models.Model):
         ordering = ["number"]
 
 
+
 class Booking(models.Model):
-    pass
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bookings")
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="bookings")
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    creation_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.room}"
+
+    class Meta:
+        verbose_name = "Booking"
+        verbose_name_plural = "Bookings"
+        ordering = ["start_time"]
